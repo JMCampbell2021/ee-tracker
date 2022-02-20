@@ -25,7 +25,7 @@ const promptUser = () => {
           "End"]
       },
     ])
-    .then((answer) => {
+    .then(answer => {
       switch (answer.action) {
       case "View All Employees":
         viewEmployees();
@@ -83,9 +83,10 @@ const promptUser = () => {
         updateEmployeeMng();
         break;
       
-      case "EXIT":
-        console.log("Thanks for using Employee Tracker!")
-        process.exit();
+      case "End":
+        end();
+        break;
+
       };
     });
   }
