@@ -48,7 +48,7 @@ function promptUser () {
             value: "addDepartment"
           },
           {
-            name: " Update Department",
+            name: "Update Department",
             value: "updateDepartment"
           },
           {
