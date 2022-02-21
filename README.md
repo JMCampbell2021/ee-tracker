@@ -44,7 +44,7 @@ https://user-images.githubusercontent.com/92699311/154982584-8aa1d728-181a-4c0a-
 
 ## Live Application Link
 
-None - to use please down loaded repo and use node.js to run command line application.
+To use please download repo and use node.js to run command line application.
 
 ## Contact Information
 
