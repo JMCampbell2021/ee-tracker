@@ -15,7 +15,15 @@ function promptUser () {
             name: "View all employees",
             value: "viewEmployees"
           },
-          // "View All Employees by Department",
+          {
+            name: "View all employees by department",
+            value: "viewEEByDepartment"
+          },
+          {
+            name: "View Employees by Manager",
+            value: "viewEEByMgr"
+          },
+
           // "View Employees by Manager",
           // "View Departments",
           // "Add Employee",
@@ -37,11 +45,33 @@ function promptUser () {
       if (choice == "viewEmployees") {
         viewEmployees()
       }
+      if (choice == "viewEEByDepartment") {
+        viewEEByDepartment()
+      }
+      if (choice == "viewEEByMgr") {
+        viewEEByMgr()
+      }
+      
+
     });
   }
 
   function viewEmployees() {
     db.viewAllEmployees().then(([rows]) =>{
+      let employees = rows 
+      console.table(employees)
+    }).then(() =>{promptUser()})
+  }
+
+  function viewEEByDepartment() {
+    db.viewEEByDepartment().then(([rows]) =>{
+      let employees = rows 
+      console.table(employees)
+    }).then(() =>{promptUser()})
+  }
+
+  function viewEEByMgr() {
+    db.viewEEByMgr().then(([rows]) =>{
       let employees = rows 
       console.table(employees)
     }).then(() =>{promptUser()})
