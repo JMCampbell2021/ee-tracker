@@ -24,10 +24,9 @@ class DB {
 
   addEmployee(employee) {
     return this.connection.promise().query(
-        "INSERT INTO employees SET ?", employee
+      "INSERT INTO employees SET ?", employee
     )
   }
-
 
   findAllDepartments() {
     return this.connection.promise().query(

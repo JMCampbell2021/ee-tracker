@@ -4,29 +4,27 @@ DROP TABLE IF EXISTS roles;
 
 
 CREATE TABLE departments (
-  id INT AUTO_INCREMENT NOT NULL,
-  name VARCHAR(30) NULL,
-  PRIMARY KEY (id)
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE roles (
-  id INT AUTO_INCREMENT NOT NULL,
-  title VARCHAR(30) NULL,
-  salary DECIMAL(10) NULL,
-  department_id INT NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (department_id) REFERENCES departments(id)
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(30) UNIQUE NOT NULL,
+  salary DECIMAL UNSIGNED NOT NULL,
+  department_id INT UNSIGNED NOT NULL,
+  INDEX dep_ind (department_id),
+  FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
 );
 
 CREATE TABLE employees (
-  id INT AUTO_INCREMENT NOT NULL,
-  first_name VARCHAR(30) NULL,
-  last_name VARCHAR(30) NULL,
-  role_id INT NOT NULL,
-  manager_id INT,
-  department_id INT NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (department_id) REFERENCES departments(id),
-  FOREIGN KEY (role_id) REFERENCES roles(id),
-  FOREIGN KEY (manager_id) REFERENCES employees(id)
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  role_id INT UNSIGNED NOT NULL,
+  INDEX role_ind (role_id),
+  manager_id INT UNSIGNED,
+  INDEX man_ind (manager_id),
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+  FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );

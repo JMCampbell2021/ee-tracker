@@ -5,8 +5,7 @@ require('console.table')
 // First prompt to start server
 function promptUser () {
     return inquirer
-    .prompt([
-      {
+    .prompt([{
         type: 'list',
         name: 'task',
         message: 'What would you like to do? (Required)',
@@ -89,7 +88,6 @@ function promptUser () {
       if (choice == "endApp") {
         endApp()
       }
-
     });
   }
 
@@ -126,60 +124,61 @@ function promptUser () {
         message: "What is the employee's last name?"
       }
     ])
-      .then(res => {
-        let first = res.first_name;
-        let last = res.last_name;
+    
+    .then(res => {
+    let first = res.first_name;
+    let last = res.last_name;
   
-        db.findAllRoles()
-          .then(([rows]) => {
-            let roles = rows;
-            const roleList = roles.map(({ id, title }) => ({
-              name: title,
-              value: id
+    db.findAllRoles()
+      .then(([rows]) => {
+      let roles = rows;
+      const roleList = roles.map(({ id, title }) => ({
+      name: title,
+      value: id
+      }));
+  
+      return inquirer
+      .prompt({
+      type: "list",
+      name: "roleId",
+      message: "What is the employee's role?",
+      choices: roleList
+      })
+       .then(res => {
+        let roleId = res.roleId;
+  
+        db.viewAllEmployees()
+        .then(([rows]) => {
+          let employees = rows;
+          const managers = employees.map(({ id, first_name, last_name }) => ({
+            name: `${first_name} ${last_name}`,
+            value: id
             }));
   
-            return inquirer
+            managers.unshift({ name: "None", value: null });
+  
+            return inquirer 
             .prompt({
-              type: "list",
-              name: "roleId",
-              message: "What is the employee's role?",
-              choices: roleList
+            type: "list",
+            name: "managerId",
+            message: "Who is the employee's manager?",
+            choices: managers
             })
-              .then(res => {
-                let roleId = res.roleId;
+            .then(res => {
+            let employee = {
+            manager_id: res.managerId,
+            role_id: roleId,
+            first_name: first,
+            last_name: last
+            }
   
-                db.viewAllEmployees()
-                  .then(([rows]) => {
-                    let employees = rows;
-                    const managers = employees.map(({ id, first_name, last_name }) => ({
-                      name: `${first_name} ${last_name}`,
-                      value: id
-                    }));
-  
-                    managers.unshift({ name: "None", value: null });
-  
-                    return inquirer 
-                    .prompt({
-                      type: "list",
-                      name: "managerId",
-                      message: "Who is the employee's manager?",
-                      choices: managers
-                    })
-                      .then(res => {
-                        let employee = {
-                          manager_id: res.managerId,
-                          role_id: roleId,
-                          first_name: first,
-                          last_name: last
-                        }
-  
-                        db.addEmployee(employee);
-                      })
-                      .then(() => promptUser())
-                  })
-              })
+            db.addEmployee(employee);
+            })
+          .then(() => promptUser())
           })
+        })
       })
+    })
   }
 
   function endApp() {
