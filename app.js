@@ -24,7 +24,6 @@ function promptUser () {
             value: "viewEEByMgr"
           },
 
-          // "View Employees by Manager",
           // "View Departments",
           // "Add Employee",
           // "Remove Employees",
