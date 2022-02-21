@@ -3,7 +3,7 @@ const db = require('./db');
 require('console.table')
   
 // First prompt to start server
-function promptUser () {
+const promptUser = () => {
     return inquirer
     .prompt([{
         type: 'list',
@@ -36,7 +36,7 @@ function promptUser () {
           },
           {
             name: "Remove an employee",
-            value: "RemoveEE"
+            value: "removeEE"
           },
           {
             name: "View Department",
@@ -85,34 +85,37 @@ function promptUser () {
       if (choice == "updateEE") {
         updateEE()
       }
+      if (choice == "removeEE") {
+        removeEE()
+      }
       if (choice == "endApp") {
         endApp()
       }
     });
   }
 
-  function viewEmployees() {
+  const viewEmployees =() => {
     db.viewAllEmployees().then(([rows]) =>{
       let employees = rows 
       console.table(employees)
     }).then(() =>{promptUser()})
   }
 
-  function viewEEByDepartment() {
+  const viewEEByDepartment =() => {
     db.viewEEByDepartment().then(([rows]) =>{
       let employees = rows 
       console.table(employees)
     }).then(() =>{promptUser()})
   }
 
-  function viewEEByMgr() {
+  const viewEEByMgr =() => {
     db.viewEEByMgr().then(([rows]) =>{
       let employees = rows 
       console.table(employees)
     }).then(() =>{promptUser()})
   }
   
-  function addEE() {
+  const addEE =() => {
     return inquirer
     .prompt([
       {
@@ -181,7 +184,30 @@ function promptUser () {
     })
   }
 
-  function endApp() {
+  const removeEE =() => {
+    return inquirer
+    .prompt([
+      {
+        name: "first_name",
+        message: "What is the employee's first name?"
+      },
+      {
+        name: "last_name",
+        message: "What is the employee's last name?"
+      },
+    ]).then(res => {
+    let first = res.first_name;
+    let last = res.last_name;
+
+    let employee = {
+      first_name: first,
+      last_name: last
+      }
+      db.deleteEE(employee);
+    })
+  };
+
+  const endApp = () => {
     process.exit();
   }
 

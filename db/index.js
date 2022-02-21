@@ -55,6 +55,12 @@ class DB {
     );
   }
 
+  deleteEE(employee){
+    return this.connection.promise().query(
+      "DELETE FROM employees WHERE ?", employee
+    );
+
+  }
 }
 
 module.exports = new DB(connection)
