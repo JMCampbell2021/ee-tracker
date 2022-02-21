@@ -32,7 +32,9 @@ For this challenge/assignement I was task with building a command-line applicati
 * THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 
 ## Demostration
-https://watch.screencastify.com/v/ccITNYVzzbDNx8gY2z5R
+
+https://user-images.githubusercontent.com/92699311/154893886-4e2474a0-ebf4-4c03-b2cc-51d1ff1abb6b.mp4
+
 
 ![Screen Shot 2022-02-21 at 12 10 36 AM](https://user-images.githubusercontent.com/92699311/154893420-33c00dd3-331e-4fa0-81cd-fa02fb60dfd9.png)
 
